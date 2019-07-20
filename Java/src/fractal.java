@@ -2,10 +2,7 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import javax.imageio.ImageIO;
-import java.util.Dictionary;
-import java.util.Hashtable;
 
 public class fractal{
 	/** This contains a collection of functions to do the following:
@@ -14,13 +11,11 @@ public class fractal{
 	 * draw() -> Takes output from iteration and draws an image based upon bound set
 	 */
 	
-	private Dictionary dic = new Hashtable();
 	private int NO_ITERS ; // Number of iterations 
 	private int WIDTH = 1000; // Image width in pixels
 	private int HEIGHT = 1000;// Image height in pixels
 	private double diam = 3; //Diameter of the complex plane which is computed
 	private complex center ;//The image is centered at this complex point on the complex plane
-
 	
 	public fractal(int iters, complex center, double diam, int width, int height){
 		this.diam = diam;
@@ -40,19 +35,15 @@ public class fractal{
 		/**Code that determines the set, z^2 + c is mandelbrot (where c is the parameter that span the complex plane) **/
 		
 		complex z = new complex(0,0);
-
-		int count = 0;
-		double yInc  = diam/HEIGHT;//each pixel has yInc and XInc length on the complex plane.
-		double xInc = diam/WIDTH;
 		
-		while (count<NO_ITERS){
-			count+=1;
+		for(int count =0; count< NO_ITERS;++count) {
+			
 			double zRsq = z.real*z.real;
 			double zIsq = z.imag*z.imag;
+			
 			z.imag = z.real*z.imag;//Math.pow((z.real+z.imag),2) - zRsq - zIsq;
 			z.imag+=z.imag;
 			z.real = zRsq-zIsq;
-			
 			z.add(c);
 			
 			if (zRsq+zIsq >4){
@@ -61,7 +52,8 @@ public class fractal{
 				return z;
 			}
 		}
-		z.iters = count;
+		
+		z.iters = NO_ITERS;//count;
 		return z;
 	}
 	
@@ -69,17 +61,15 @@ public class fractal{
 		
 		ArrayList<complex> pixelList = new ArrayList<complex>(); //list of pixels in set
 		
+		double yInc  = this.diam/HEIGHT;//each pixel has yInc and XInc length on the complex plane.
+		double xInc = this.diam/WIDTH;
 		
-		double yInc  = diam/HEIGHT;//each pixel has yInc and XInc length on the complex plane.
-		double xInc = diam/WIDTH;
-		
-		complex c = new complex(-diam/2,diam/2);// C value is half the diameter radius, starting at top left corner of complex plane where the center is 0,0, c value changes based on pixel location
-		c.add(center);//offsets via the center 
-		//change this to random sample c points that retain their orbit data too
+		complex c = new complex(-this.diam/2,this.diam/2);// C value is half the diameter radius, starting at top left corner of complex plane where the center is 0,0, c value changes based on pixel location
+		c.add(this.center);//offsets via the center 
 		
 		for(int y=0;y<HEIGHT;y++){//iterate vertically
-			c.real = -diam/2;//start at the left side
-			c.real+=center.real; //shifts via the center offset again
+			c.real = -this.diam/2;//start at the left side
+			c.real+=this.center.real; //shifts via the center offset again
 			for (int x=0;x<WIDTH;x++){//iterate horizontally
 				complex f = fun(c);
 				f.x = x;
@@ -88,7 +78,7 @@ public class fractal{
 				c.real+=xInc;
 			}
 			c.imag-=yInc;
-		}//need to make hash table of points that interpolate to actual pixels/points that keep count of increments
+		}
 		
 		return pixelList;
 	}
@@ -107,11 +97,11 @@ public class fractal{
 		}
 		
 		//saving img code
-		File outputfile = new File(String.format("image_%d_%d_%d_%f.png",WIDTH,HEIGHT,NO_ITERS,diam));
+		File outputfile = new File(String.format("image_%d_%d_%d_%f.png",WIDTH,HEIGHT,NO_ITERS,this.diam));
 		try{
 		ImageIO.write(img, "png", outputfile);
 		}catch(Exception IOException){
-	
+			System.out.println("Error: Unable to write image file.");
 		}
 	}
 } 
