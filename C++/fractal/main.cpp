@@ -14,10 +14,10 @@ class fractal{
         complex<double> center;
 
         struct complexPixel{
-            int x;
-            int y;
-            int iters;
-            complex<double> cPoint;
+            //int x;
+            //int y;
+            short iters;
+            //complex<double> cPoint;
         };
 
     public:
@@ -49,8 +49,8 @@ class fractal{
             c.real(center.real() + c.real());
             for(int x=0; x<WIDTH;x++){
                 complexPixel f = fun(c);
-                f.x = x;
-                f.y =y;
+                //f.x = x;
+                //f.y =y;
                 //f.cPoint = c;
                 pixelMatrix[x][y] = f;
 
@@ -67,18 +67,17 @@ class fractal{
         complexPixel fun(complex<double>& c){
             complex<double> z(0,0);
             complexPixel cP;
-            cP.cPoint = z;//is this a copy or a reference?
+            //cP.cPoint = z;//is this a copy or a reference?
             for(int i=0;i<NO_ITERS; ++i){
-                /**double zRsq = z.real()*z.real();
-                double zIsq = z.imag()*z.imag();
+                double zRsq = real(z)*real(z);
+                double zIsq = imag(z)*imag(z);
 
-                z.imag(z.real()*z.imag());
-                z.real(zIsq-zRsq);**/
-                z= z*z;
+                z.imag((real(z)*imag(z)));
+                z.imag(z.imag()+z.imag());
+                z.real(zRsq-zIsq);
                 z+=c;
-               // if (zRsq+zIsq > 4){
-               if(abs(z) >2){
-                    //cout<<"unbound!";
+
+                if (zRsq+zIsq > 4){
                     cP.iters = i;
                     return cP;
                 }
@@ -118,8 +117,8 @@ int main()
     int iters = 500;
     complex<double> center(-1.7798310726,0.0000768808);
     double diam = 0.0001;
-    int image_height = 1000;
-    int image_width = 1000;
+    int image_height = 10000;
+    int image_width = 10000;
     fractal f(iters,center,diam,image_width,image_height);
 
     auto end = chrono::steady_clock::now();
