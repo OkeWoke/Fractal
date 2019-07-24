@@ -10,7 +10,8 @@ class fractal{
         int NO_ITERS;
         int WIDTH;
         int HEIGHT;
-        double diam;
+        double diam_x;
+        double diam_y;
         complex<double> center;
 
         struct complexPixel{
@@ -21,8 +22,9 @@ class fractal{
         };
 
     public:
-        fractal(int iters, complex<double> center, double diam, int width, int height){
-            this->diam = diam;
+        fractal(int iters, complex<double> center, double diam_x, double diam_y, int width, int height){
+            this->diam_x = diam_x;
+            this->diam_y = diam_y;
             this->center = center;
             this->WIDTH = width;
             this->HEIGHT = height;
@@ -38,14 +40,14 @@ class fractal{
             pixelMatrix[i] = new complexPixel[HEIGHT];
         }
 
-        double yInc = diam/HEIGHT;
-        double xInc = diam/WIDTH;
+        double yInc = diam_y/HEIGHT;
+        double xInc = diam_x/WIDTH;
 
-        complex<double> c = complex<double>(-diam/2,diam/2);
+        complex<double> c = complex<double>(-diam_x/2,diam_y/2);
         c+=center;//view shift
         for(int y= 0;y<HEIGHT;y++){
 
-            c.real(-diam/2);
+            c.real(-diam_x/2);
             c.real(center.real() + c.real());
             for(int x=0; x<WIDTH;x++){
                 complexPixel f = fun(c);
@@ -89,11 +91,11 @@ class fractal{
         void draw(complexPixel** pixelList){
 
             png::image< png::rgb_pixel > image(WIDTH, HEIGHT);
-            for (png::uint_32 y = 0; y < image.get_height(); ++y)
+            for (int y = 0; y < HEIGHT; y++)
             {
-                for (png::uint_32 x = 0; x < image.get_width(); ++x)
+                for (int x = 0; x < WIDTH; x++)
                 {
-                    int iters = pixelList[y][x].iters;
+                    int iters = pixelList[x][y].iters;
                     if(iters==NO_ITERS){
                         image[y][x] = png::rgb_pixel(0,0,(int)(iters*(float) 255/ NO_ITERS));
                     }else{
@@ -116,10 +118,11 @@ int main()
 
     int iters = 500;
     complex<double> center(-1.7798310726,0.0000768808);
-    double diam = 0.0001;
-    int image_height = 10000;
-    int image_width = 10000;
-    fractal f(iters,center,diam,image_width,image_height);
+    double diam_x = 0.0002;
+    double diam_y = 0.0002;
+    int image_height = 1000;
+    int image_width = 1000;
+    fractal f(iters,center,diam_x,diam_y,image_width,image_height);
 
     auto end = chrono::steady_clock::now();
 
