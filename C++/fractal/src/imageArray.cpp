@@ -1,4 +1,4 @@
-#include "imageArray.h"
+#include "..\include\imageArray.h"
 
 ImageArray::ImageArray(int width, int height):WIDTH(width),HEIGHT(height)
 {
@@ -162,28 +162,7 @@ void ImageArray::logPixel()
             {
                 pixelMatrix[x][y].iters= 0;
             }
-
-
         }
     }
 }
-void ImageArray::draw( std::string filename)
-{
-    //equaliseHistogram();
-    //logPixel();
-    //normalise();
-    clipTop();
-    //png::gray_pixel_16 for future implementation
-    png::image< png::gray_pixel_16 > image(WIDTH, HEIGHT);
 
-    for (int y = 0; y < HEIGHT; ++y)
-    {
-        for (int x = 0; x < WIDTH; ++x)
-        {
-            int gray = pixelMatrix[x][y].iters;
-            image[y][x] = png::gray_pixel_16(gray);
-        }
-    }
-
-    image.write("renders/"+filename+"_"+std::to_string(HEIGHT)+"x"+std::to_string(WIDTH)+"_"+std::to_string(time(0))+".png");
-}

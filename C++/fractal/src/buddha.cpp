@@ -1,4 +1,4 @@
-#include "buddha.h"
+#include "..\include\buddha.h"
 
 BuddhaFractal::BuddhaFractal(int min_iters, int max_iters, unsigned int points, complex<double> center, double diam_x, double diam_y, int width, int height, ImageArray::complexPixel** img, int thread_count)
 :MIN_ITERS(min_iters)

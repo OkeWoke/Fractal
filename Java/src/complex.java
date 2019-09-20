@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-
-
 public class complex{
 /**Custom class to represent complex numbers also contains 2 properties, iteration count and bound boolean to minimize arithmetic done**/
 	

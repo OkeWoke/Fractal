@@ -1,18 +1,104 @@
 # depslib dependency file v1.0
-1563712607 source:y:\programming\fractal\c++\fractal\main.cpp
+1567412847 source:y:\programming\fractal\c++\fractal\main.cpp
 	<iostream>
 	<chrono>
 	<complex.h>
-	<vector>
+	<png.hpp>
+	<random>
+	<conio.h>
+	<string>
+	<ctime>
+	"imageArray.h"
+	"fractal.h"
+	"buddha.h"
+
+1563933713 source:\\192.168.1.116\my2ndshare\programming\fractal\c++\fractal\main.cpp
+	<iostream>
+	<chrono>
+	<complex.h>
 	<png.hpp>
 
-1563883361 source:\\192.168.1.116\my2ndshare\programming\fractal\c++\fractal\main.cpp
+1564312063 y:\programming\fractal\c++\fractal\fractal.h
 	<iostream>
 	<chrono>
 	<complex.h>
-	<vector>
-	<stdlib.h>
-	<stdio.h>
-	<FreeImage.h>
 	<png.hpp>
+	<random>
+	<conio.h>
+	<string>
+	"imageArray.h"
+
+1564312135 source:y:\programming\fractal\c++\fractal\fractal.cpp
+	"fractal.h"
+
+1567412579 y:\programming\fractal\c++\fractal\buddha.h
+	<iostream>
+	<chrono>
+	<complex.h>
+	<png.hpp>
+	<random>
+	<conio.h>
+	<string>
+	"imageArray.h"
+	<thread>
+
+1567413359 source:y:\programming\fractal\c++\fractal\buddha.cpp
+	"buddha.h"
+
+1564918691 y:\programming\fractal\c++\fractal\imagearray.h
+	<png.hpp>
+	<string>
+	<ctime>
+	<cmath>
+
+1564918740 source:y:\programming\fractal\c++\fractal\imagearray.cpp
+	"imageArray.h"
+
+1568954621 source:y:\programming\fractal\c++\fractal\src\buddha.cpp
+	"..\include\buddha.h"
+
+1567412579 y:\programming\fractal\c++\fractal\include\buddha.h
+	<iostream>
+	<chrono>
+	<complex.h>
+	<png.hpp>
+	<random>
+	<conio.h>
+	<string>
+	"imageArray.h"
+	<thread>
+
+1568956645 y:\programming\fractal\c++\fractal\include\imagearray.h
+	<string>
+	<ctime>
+	<cmath>
+
+1568954640 source:y:\programming\fractal\c++\fractal\src\fractal.cpp
+	"..\include\fractal.h"
+
+1564312063 y:\programming\fractal\c++\fractal\include\fractal.h
+	<iostream>
+	<chrono>
+	<complex.h>
+	<png.hpp>
+	<random>
+	<conio.h>
+	<string>
+	"imageArray.h"
+
+1568954650 source:y:\programming\fractal\c++\fractal\src\main.cpp
+	<iostream>
+	<chrono>
+	<complex.h>
+	<png.hpp>
+	<random>
+	<conio.h>
+	<string>
+	<ctime>
+	"..\include\imageArray.h"
+	"..\include\fractal.h"
+	"..\include\buddha.h"
+
+1568956551 source:y:\programming\fractal\c++\fractal\src\imagearray.cpp
+	"..\include\imageArray.h"
 

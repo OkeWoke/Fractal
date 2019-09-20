@@ -9,10 +9,10 @@
 
 using namespace std;
 
-#include "imageArray.h"
-#include "fractal.h"
-#include "buddha.h"
-
+#include "..\include\imageArray.h"
+#include "..\include\fractal.h"
+#include "..\include\buddha.h"
+void draw(ImageArray img, string filename);
 
 int main()
 {
@@ -40,13 +40,30 @@ int main()
 
     BuddhaFractal a(min_iters,iters,points,center,diam_x,diam_y,image_width,image_height, img.pixelMatrix,threads_to_use);
 
-    img.draw("Buddha_"+to_string(min_iters)+"_"+to_string(iters)+"_"+to_string(points)+"_"+to_string(diam_y)+"_"+to_string(diam_x));
+    draw(img, "renders/Buddha_"+to_string(image_height)+"x"+to_string(image_width)+"_"+to_string(time(0))+"_"+to_string(min_iters)+"_"+to_string(iters)+"_"+to_string(points)+"_"+to_string(diam_y)+"_"+to_string(diam_x));
     img.clearArray();
     img.deleteArray();
 
     auto end = chrono::steady_clock::now();
-    cout << chrono::duration_cast<chrono::seconds>(end - start).count()<< " (s)"<<endl;
+    cout << "Completed in: "<<chrono::duration_cast<chrono::seconds>(end - start).count()<< " (s)"<<endl;
     getch();
 
     return 0;
 }
+
+void draw(ImageArray img, string filename)
+{
+    img.clipTop();
+    //png::gray_pixel_16 for future implementation
+    png::image< png::gray_pixel_16 > image(img.WIDTH, img.HEIGHT);
+
+    for (int y = 0; y < img.HEIGHT; ++y)
+    {
+        for (int x = 0; x < img.WIDTH; ++x)
+        {
+            int gray = img.pixelMatrix[x][y].iters;
+            image[y][x] = png::gray_pixel_16(gray);
+        }
+    }
+    image.write(filename);
+
