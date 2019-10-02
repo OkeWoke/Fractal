@@ -66,4 +66,4 @@ void draw(ImageArray img, string filename)
         }
     }
     image.write(filename);
-
+}
