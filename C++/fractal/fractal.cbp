@@ -33,13 +33,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="buddha.cpp" />
-		<Unit filename="buddha.h" />
-		<Unit filename="fractal.cpp" />
-		<Unit filename="fractal.h" />
-		<Unit filename="imageArray.cpp" />
-		<Unit filename="imageArray.h" />
-		<Unit filename="main.cpp" />
+		<Unit filename="include/buddha.h" />
+		<Unit filename="include/fractal.h" />
+		<Unit filename="include/imageArray.h" />
+		<Unit filename="src/buddha.cpp" />
+		<Unit filename="src/fractal.cpp" />
+		<Unit filename="src/imageArray.cpp" />
+		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
