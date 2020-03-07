@@ -1,4 +1,4 @@
-#include "..\include\buddha.h"
+#include "buddha.h"
 
 BuddhaFractal::BuddhaFractal(int min_iters, int max_iters, unsigned int points, complex<double> center, double diam_x, double diam_y, int width, int height, ImageArray::complexPixel** img, int thread_count)
 :MIN_ITERS(min_iters)
@@ -52,7 +52,7 @@ void BuddhaFractal::iteration()
     thread thread_array[THREAD_COUNT] ;
 
     for(int i=0;i<THREAD_COUNT;i++){
-        thread_array[i] = thread(this->threadIter,this,i);
+        thread_array[i] = thread(&BuddhaFractal::threadIter,this,i);
         cout<< "Creating thread " << i << endl;
     }
 
@@ -68,8 +68,8 @@ void BuddhaFractal::threadIter(int thread_i)
     uniform_real_distribution<double> unif_imag(center.imag()-diam_y/2,center.imag()+diam_y/2);
 
     rng.seed(chrono::high_resolution_clock::now().time_since_epoch().count());
-    int thread_count = 8;
-    for(unsigned int i=thread_i;i<NO_POINTS;i=i+thread_count)
+
+    for(unsigned int i=thread_i;i<NO_POINTS;i=i+THREAD_COUNT)
     {
         double x = unif(rng);
         double y = unif_imag(rng);

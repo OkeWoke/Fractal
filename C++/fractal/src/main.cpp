@@ -3,15 +3,15 @@
 #include <complex.h>
 #include <png.hpp>
 #include <random>
-#include <conio.h>
+
 #include <string>
 #include <ctime>
 
 using namespace std;
 
-#include "..\include\imageArray.h"
-#include "..\include\fractal.h"
-#include "..\include\buddha.h"
+#include "imageArray.h"
+#include "fractal.h"
+#include "buddha.h"
 void draw(ImageArray img, string filename);
 
 int main()
@@ -19,34 +19,35 @@ int main()
     auto start = chrono::steady_clock::now();
 
     //parameters
-    int iters = 200;
+    int iters = 1;
     int min_iters = 0;
-    complex<double> center(-0.4,0);
-    double diam_x = 2.1;
-    double diam_y = 2.1;
-    int image_width = 500;
-    int image_height = 500;
-    int threads_to_use = 4;
-    unsigned int points =image_width*image_height*100; //changes noise profile
+    complex<double> center(-0.55,0.625);
+    double diam_x = 0.01;
+    double diam_y = 0.01;
+    int image_width = 2000;
+    int image_height = 2000;
+    int threads_to_use = 21;
+    unsigned int points =image_width*image_height*10000; //changes noise profile
 
     //image creation, fractal creation, and array deletion.
     ImageArray img(image_width,image_height);
-   /** for(int i=0;i<100;i++)  //Animation via making many subframes
+    for(int i=0;i<100;i++)  //Animation via making many subframes
     {
-        BuddhaFractal a(min_iters+(i*50),iters+(i*50),points,center,diam_x,diam_y,image_width,image_height, img.pixelMatrix);
-        img.draw("animation_"+to_string(time(0))+"/Buddha_"+to_string(min_iters)+"_"+to_string(iters)+"_"+to_string(points)+"_"+to_string(diam_y)+"_"+to_string(diam_x));
+        BuddhaFractal a(min_iters,iters+i,points,center,diam_x,diam_y,image_width,image_height, img.pixelMatrix,threads_to_use );
+        draw(img, "renders/Buddha_"+to_string(min_iters)+"_"+to_string(iters+i)+"_"+to_string(points)+"_"+to_string(diam_y)+"_"+to_string(diam_x)+".png");
         img.clearArray();
-    }**/
+    }
 
-    BuddhaFractal a(min_iters,iters,points,center,diam_x,diam_y,image_width,image_height, img.pixelMatrix,threads_to_use);
+    //BuddhaFractal a(min_iters,iters,points,center,diam_x,diam_y,image_width,image_height, img.pixelMatrix,threads_to_use);
 
-    draw(img, "renders/Buddha_"+to_string(image_height)+"x"+to_string(image_width)+"_"+to_string(time(0))+"_"+to_string(min_iters)+"_"+to_string(iters)+"_"+to_string(points)+"_"+to_string(diam_y)+"_"+to_string(diam_x));
-    img.clearArray();
+    //draw(img, "renders/Buddha_"+to_string(image_height)+"x"+to_string(image_width)+"_"+to_string(time(0))+"_"+to_string(min_iters)+"_"+to_string(iters)+"_"+to_string(points)+"_"+to_string(diam_y)+"_"+to_string(diam_x)+".png");
+    //img.clearArray();
     img.deleteArray();
 
     auto end = chrono::steady_clock::now();
     cout << "Completed in: "<<chrono::duration_cast<chrono::seconds>(end - start).count()<< " (s)"<<endl;
-    getch();
+    //#int b = 0;
+    //#cin >> b;
 
     return 0;
 }
@@ -54,6 +55,10 @@ int main()
 void draw(ImageArray img, string filename)
 {
     img.clipTop();
+    //img.logPixel();
+    img.normalise();
+    //img.equaliseHistogram();
+
     //png::gray_pixel_16 for future implementation
     png::image< png::gray_pixel_16 > image(img.WIDTH, img.HEIGHT);
 
@@ -61,7 +66,7 @@ void draw(ImageArray img, string filename)
     {
         for (int x = 0; x < img.WIDTH; ++x)
         {
-            int gray = img.pixelMatrix[x][y].iters;
+            unsigned short gray = img.pixelMatrix[x][y].iters;
             image[y][x] = png::gray_pixel_16(gray);
         }
     }

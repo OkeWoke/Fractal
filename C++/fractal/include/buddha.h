@@ -3,7 +3,7 @@
 #include <complex.h>
 #include <png.hpp>
 #include <random>
-#include <conio.h>
+
 #include <string>
 #include "imageArray.h"
 #ifndef BUDDHA_FRACTAL
